@@ -1,8 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app>
     <head>
         <meta charset="utf-8">
+        <title>Twitter App</title>
+        <link rel="icon" href="img/stat.png" type="image" sizes="16x16">
+        <meta name="description" content="investigation on tweets of internet of things">
+        <meta name="keywords" content="twitter, internet of things, iot">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
     </head>
     <body>
+        <div class="container">
+            <div class="row">
+                <form>
+                    <img src="img/logo.png" alt="mnubo logo" title="mnubo logo"><br>
+                    <div class="input-group">
+                        <input id="searchbox" type="text" place-holder="iot" data-ng-model="search" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">mnubo Search!</button>
+                        </span>
+                    </div>
+                    {{ search }}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" data-ng-model="isHidden">
+                            Hide Tweet Images 
+                        </label>
+                    </div>
+                </form>
+                <table class="table table-stripped" data-ng-hide="hideTable">
+                     <tr>
+                         <th>Tweet content</th>
+                         <th ng-hide="isHidden">Tweet Image</th>
+                     </tr>
+                     
+                </table>
+             </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/angular.min.js"></script>
     </body>
 </html>
