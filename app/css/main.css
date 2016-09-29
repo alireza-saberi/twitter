@@ -3,3 +3,9 @@
   display: none !important;
 }
 
+
+/* centering mnubo logo*/
+img.img-responsive {
+    display: block;
+    margin: 35px auto;
+}
