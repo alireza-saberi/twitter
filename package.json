@@ -1,0 +1,16 @@
+{
+  "name": "angular-tweeter-app",
+  "version": "1.0.0",
+  "description": "Simple AngularJS API which connect to Tweeter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alireza Saberi",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-bootstrap": "^2.1.4",
+    "bootstrap": "^3.3.7"
+  }
+}
