@@ -9,3 +9,10 @@ img.img-responsive {
     display: block;
     margin: 35px auto;
 }
+
+.center-block {
+    /* display: block; */
+    /* margin-right: auto; */
+    /* margin-left: auto; */
+    text-align: center;
+}

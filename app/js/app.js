@@ -2,6 +2,9 @@
 // Container module
 var app = angular.module('twitterApp', []);
 
+// contacts for versioning
+app.constant( 'version', '1.0' );
+
 // factories
 app.factory("twitter", ["$http", function( $http ) {
     var twts = {};
@@ -18,7 +21,8 @@ app.factory("twitter", ["$http", function( $http ) {
 }]);
 
 // Controllers
-app.controller('twitterController', ["$scope", "twitter", function ( $scope, twitter ) {
+app.controller('twitterController', ["$scope", "twitter", "version",  function ( $scope, twitter, version ) {
+    $scope.version = version;
     $scope.hideTable = true;
     $scope.searchbox = {
     	str: "",
