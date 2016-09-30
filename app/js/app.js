@@ -9,19 +9,15 @@ app.constant( 'version', '1.0' );
 app.factory("twitter", ["$http", function( $http ) {
     var twts = {};
     twts.getTweets = function( searchString ){
-        // return $http.get('/condidateslist');
-        return [
-            {message: 'tweet1', img:'img1'}, 
-            {message: 'tweet2', img:'img2'},
-            {message: 'tweet3', img:'img3'}, 
-            {message: 'tweet4', img:'img4'}
-        ];
+        var urlEncoded = encodeURIComponent( searchString + ' #iot' );
+        console.log(urlEncoded);
+        return $http.get( '/twitter', urlEncoded );
     }
     return twts;
 }]);
 
 // Controllers
-app.controller('twitterController', ["$scope", "twitter", "version",  function ( $scope, twitter, version ) {
+app.controller('twitterController', ["$scope", "twitter", "version", "$log",  function ( $scope, twitter, version, $log ) {
     $scope.version = version;
     $scope.hideTable = true;
     $scope.searchbox = {
@@ -32,7 +28,14 @@ app.controller('twitterController', ["$scope", "twitter", "version",  function (
 
     $scope.search = function( searchString ) {
     	$scope.hideTable = false;
-        $scope.tweets = twitter.getTweets( searchString );
+
+        // Asynchronous call to twitter 
+        twitter.getTweets( searchString ).success( function( tweets ){
+            $scope.tweets = tweets;
+
+        } ).error( function( data, status, header, config ){
+            $log.log("error talking with twitter!");
+        });
     };
 }]);
 
