@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app>
+<html lang="en" data-ng-app="twitterApp">
     <head>
         <meta charset="utf-8">
         <title>Twitter App</title>
@@ -11,28 +11,41 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container" data-ng-controller="twitterController">
             <div class="row">
                 <form>
                     <img src="img/logo.png" alt="mnubo logo" title="mnubo logo" class="img-responsive">
                     <div class="input-group">
-                        <input id="searchbox" type="text" place-holder="iot" data-ng-model="search" class="form-control">
+                        <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">mnubo Search!</button>
+                            <button class="btn btn-default" type="button" ng-click="search(searchbox.str)">
+                                mnubo Search!
+                            </button>
                         </span>
                     </div>
-                    {{ search }}
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" data-ng-model="isHidden">
+                            <input type="checkbox" data-ng-model="searchbox.hideImage">
                             Hide Tweet Images 
                         </label>
                     </div>
                 </form>
-                <table class="table table-stripped" data-ng-hide="hideTable" ng-cloak>
+                <table class="table table-striped" data-ng-hide="hideTable" ng-cloak>
                      <tr>
-                         <th>Tweet content</th>
-                         <th ng-hide="isHidden">Tweet Image</th>
+                        <th>
+                            Tweet content
+                        </th>
+                        <th data-ng-hide="searchbox.hideImage">
+                            Tweet Image
+                        </th>
+                     </tr>
+                     <tr data-ng-repeat="tweet in tweets">
+                        <td>
+                            {{ tweet.message }}
+                        </td>
+                        <td data-ng-hide="searchbox.hideImage">
+                            {{ tweet.img }}
+                        </td>
                      </tr>
                      
                 </table>
@@ -41,5 +54,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
+
+        <script src="js/app.js"></script>
     </body>
 </html>
