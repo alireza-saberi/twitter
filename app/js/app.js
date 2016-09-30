@@ -3,7 +3,7 @@
 var app = angular.module('twitterApp', []);
 
 // Controllers
-app.controller('twitterController', function ($scope) {
+app.controller('twitterController', ["$scope", function ($scope) {
     $scope.hideTable = true;
     $scope.searchbox = {
     	str: "",
@@ -20,6 +20,6 @@ app.controller('twitterController', function ($scope) {
             {message: 'tweet4', img:'img4'}
         ];
     };
-});
+}]);
 
 // facotried
