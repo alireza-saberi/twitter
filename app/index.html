@@ -15,12 +15,12 @@
             <div class="row">
                 <button ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
                 <button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>
-                <form>
+                <form  name="myForm" novalidate>
                     <img src="img/logo.png" alt="mnubo logo" title="mnubo logo" class="img-responsive">
                     <div class="input-group">
-                        <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control" autofocus>
+                        <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control" name="searchbox" ng-minlength="1" autofocus required>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" ng-click="search(searchbox.str)">
+                            <button class="btn btn-default" type="submit" ng-click="search(searchbox.str)" ng-disabled="myForm.$invalid">
                                 mnubo Search!
                             </button>
                         </span>
@@ -31,7 +31,7 @@
                             Hide Tweet Images 
                         </label>
                     </div>
-                    <div ng-cloak data-ng-if="!hideTable"> {{ tweets.length }} results in {{ timer }} seconds</div>
+                    <div ng-cloak data-ng-if="!hideMessage"> {{ tweets.length }} results in {{ timer }} seconds</div>
                 </form>
                 <table class="table table-striped" data-ng-if="!hideTable" ng-cloak>
                      <tr>

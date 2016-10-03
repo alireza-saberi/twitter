@@ -37,7 +37,7 @@ angular.module('twitterApp.services', []).factory('twitterService', function( $q
             var deferred = $q.defer();
             var url = '/1.1/search/tweets.json';
             //  q query: 500 characters maximum, including operators. Queries may additionally be limited by complexity
-            url += '?q=' + urlEncoded + '&count=20';
+            url += '?q=' + urlEncoded + '&count=100';
 
             var promise = authorizationResult.get( url ).done( function( data ) {
                 //in case of any error we reject the promise with the error object
@@ -66,6 +66,7 @@ app.constant( 'version', '1.0' );
 app.controller('twitterController', ["$scope", "version", "$log", "twitterService" , "$q", function ( $scope, version, $log, twitterService, $q ) {
     $scope.version = version;
     $scope.hideTable = true;
+    $scope.hideMessage = true;
     $scope.searchbox = {
         str: "",
         hideImage: false
@@ -110,38 +111,45 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
 
     $scope.search = function( searchString ) {
 
-        twitterService.getSearchResult( searchString ).then( function( data ) {
-            // console.log( data );
-            // console.log( "compeleted in " data.search_metadata.completed_in );
-            $scope.timer = data.search_metadata.completed_in;
-            // console.log( 'compeleted in : ' + data.search_metadata.completed_in );
-            console.log( data.statuses );
-            var trimmed_tweets = new Array();
-            for ( var i = 0; i < data.statuses.length; i++ ) {
-                if ( data.statuses[i].entities.hasOwnProperty('media') ){
-                    // console.log( data.statuses[i].entities.media[0].media_url );
-                    var tweet = {
-                        text : data.statuses[i].text,
-                        image: data.statuses[i].entities.media[0].media_url
-                    };
-                    trimmed_tweets.push( tweet );
-                } else {
-                    // console.log("No media image for this tweet!");
-                    var tweet = {
-                        text: data.statuses[i].text,
-                        image: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+        // handling empty search box
+        if (searchString.length) {
+            twitterService.getSearchResult( searchString ).then( function( data ) {
+                // console.log( data );
+                // console.log( "compeleted in " data.search_metadata.completed_in );
+                $scope.timer = data.search_metadata.completed_in;
+                $scope.hideMessage = false;
+                // console.log( 'compeleted in : ' + data.search_metadata.completed_in );
+                // console.log( data.statuses );
+                var trimmed_tweets = new Array();
+                for ( var i = 0; i < data.statuses.length; i++ ) {
+                    if ( data.statuses[i].entities.hasOwnProperty('media') ){
+                        // console.log( data.statuses[i].entities.media[0].media_url );
+                        var tweet = {
+                            text : data.statuses[i].text,
+                            image: data.statuses[i].entities.media[0].media_url
+                        };
+                        trimmed_tweets.push( tweet );
+                    } else {
+                        // console.log("No media image for this tweet!");
+                        var tweet = {
+                            text: data.statuses[i].text,
+                            image: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+                        }
+                         trimmed_tweets.push( tweet );
                     }
-                     trimmed_tweets.push( tweet );
                 }
-            }
-            // console.log( trimmed_tweets );
-            // $scope.tweets = new Array(); //array of tweets
-            $scope.tweets =  trimmed_tweets ;
-            if ( trimmed_tweets.length > 0) {
-                $scope.hideTable = false;
-            }
-        })
-
+                // console.log( trimmed_tweets );
+                $scope.tweets =  trimmed_tweets ;
+                if ( trimmed_tweets.length > 0) {
+                    $scope.hideTable = false;
+                }
+                else {
+                    $scope.hideTable = true;
+                }
+        })}
+        else {
+            console.log("Search box is empty!");
+        }
     };
 }]);
 
