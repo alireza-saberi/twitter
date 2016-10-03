@@ -16,3 +16,11 @@ img.img-responsive {
     /* margin-left: auto; */
     text-align: center;
 }
+
+.disappear {
+    display: none;
+}
+
+.appear {
+    display: inline-block;
+}

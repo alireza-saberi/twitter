@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
     "angular-ui-bootstrap": "^2.1.4",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",

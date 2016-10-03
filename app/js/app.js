@@ -80,11 +80,15 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
         twitterService.connectTwitter().then( function() {
             if (twitterService.isReady()) {
                 //if the authorization is successful, hide the connect button and display the tweets
-                $('#connectButton').fadeOut( function() {
-                    $('#getTimelineButton, #signOut').fadeIn();
-                    $scope.connectedTwitter = true;
-                    $window.location.reload();
-                });
+                angular.element($('#connectButton')).addClass("disappear").removeClass("appear");
+                angular.element($('#signOut')).addClass("appear").removeClass("disappear");
+                $scope.connectedTwitter = true;
+                $window.location.reload();
+                // $('#connectButton').fadeOut( function() {
+                //     $('#getTimelineButton, #signOut').fadeIn();
+                //     $scope.connectedTwitter = true;
+                //     $window.location.reload();
+                // });
             } else {
 
             }
@@ -95,13 +99,17 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
     $scope.signOut = function() {
         twitterService.clearCache();
         $scope.tweets.length = 0;
-        $('#getTimelineButton, #signOut').fadeOut( function() {
-            $('#connectButton').fadeIn();
-            $scope.$apply( function() {
-                $scope.connectedTwitter = false;
-                $window.location.reload();
-            })
-        });
+        angular.element($('#connectButton')).addClass("appear").removeClass("disappear");
+        angular.element($('#signOut')).addClass("disappear").removeClass("appear");
+        $scope.connectedTwitter = false;
+        $window.location.reload();
+        // $('#getTimelineButton, #signOut').fadeOut( function() {
+        //     $('#connectButton').fadeIn();
+        //     $scope.$apply( function() {
+        //         $scope.connectedTwitter = false;
+        //         $window.location.reload();
+        //     })
+        // });
     }
 
     //if the user is a returning user, hide the sign in button and display the tweets
