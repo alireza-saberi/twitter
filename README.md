@@ -16,6 +16,7 @@ In this small AngularJS app bundled with NodeJS and Express in the backend. We c
 - [UI-bootstrap](https://angular-ui.github.io/bootstrap/)
 - [NodeJS](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
+- [OAuth.io for Open Authentication](https://oauth.io)
 
 ## How to make it work on your machine
 - Assumptions: You have 'linux like terminal', `node` on your machine
