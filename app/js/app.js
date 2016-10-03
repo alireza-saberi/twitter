@@ -99,6 +99,7 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
             $('#connectButton').fadeIn();
             $scope.$apply( function() {
                 $scope.connectedTwitter = false;
+                $window.location.reload();
             })
         });
     }
