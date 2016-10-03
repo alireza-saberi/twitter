@@ -17,3 +17,10 @@ In this small AngularJS app bundled with NodeJS and Express in the backend. We c
 - [NodeJS](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 
+## How to make it work on your machine
+- Assumptions: You have 'linux like terminal', `node` on your machine
+- Clone the repository on your computer
+- Run `npm install` to get all of dependencies on the working directory.
+- Type `npm install` to get started with `server.js` on the working directory.
+- Go to your browser and type `localhost:3000` or `http://localhost:3000/`
+
