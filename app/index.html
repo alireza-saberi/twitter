@@ -9,18 +9,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="container" data-ng-controller="twitterController">
             <div class="row">
-                <button ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
-                <button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>
+                <button data-ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
+                <button data-ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>
                 <form  name="myForm" novalidate>
                     <img src="img/logo.png" alt="mnubo logo" title="mnubo logo" class="img-responsive">
                     <div class="input-group">
-                        <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control" name="searchbox" ng-minlength="1" autofocus required>
+                        <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control" name="searchbox" data-ng-minlength="1" autofocus required>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" ng-click="search(searchbox.str)" ng-disabled="myForm.$invalid && connectedTwitter">
+                            <button class="btn btn-default" type="submit" data-ng-click="search(searchbox.str)" data-ng-disabled="myForm.$invalid && connectedTwitter">
                                 mnubo Search!
                             </button>
                         </span>
@@ -31,9 +32,9 @@
                             Hide Tweet Images 
                         </label>
                     </div>
-                    <div ng-cloak data-ng-if="!hideMessage"> {{ tweets.length }} results in {{ timer }} seconds</div>
+                    <div data-ng-cloak data-ng-if="!hideMessage"> {{ tweets.length }} results in {{ timer }} seconds</div>
                 </form>
-                <table class="table table-striped" data-ng-if="!hideTable" ng-cloak>
+                <table class="table table-striped" data-ng-if="!hideTable" data-ng-cloak>
                      <tr>
                         <th>
                             Tweet Content
@@ -57,10 +58,13 @@
                     
                 </div>
              </div>
-             <footer ng-cloak>
+             <footer data-ng-cloak>
                  <div class="center-block">
-                     App version : {{ version }}
+                    App version : {{ version }}
                  </div>
+                 <div class="text-center"> 
+                    MADE WITH <i class="fa fa-heart color-violet"></i> BY <span class="color-violet">ALAN SABERI</span>. FIND THIS ON <a href="https://github.com/alireza-saberi/twitter" target="_bank"><span class="color-violet">GITHUB</span></a>
+                </div>
              </footer>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

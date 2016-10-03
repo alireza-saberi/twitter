@@ -17,10 +17,16 @@ img.img-responsive {
     text-align: center;
 }
 
+/* for twitter sign in and out buttons*/
 .disappear {
     display: none;
 }
 
 .appear {
     display: inline-block;
+}
+
+/* for footer*/
+.color-violet{
+    color: violet;
 }
