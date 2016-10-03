@@ -20,7 +20,7 @@
                     <div class="input-group">
                         <input type="text" placeholder="#iot" data-ng-model="searchbox.str" class="form-control" name="searchbox" ng-minlength="1" autofocus required>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" ng-click="search(searchbox.str)" ng-disabled="myForm.$invalid">
+                            <button class="btn btn-default" type="submit" ng-click="search(searchbox.str)" ng-disabled="myForm.$invalid && connectedTwitter">
                                 mnubo Search!
                             </button>
                         </span>
@@ -47,11 +47,12 @@
                             {{ tweet.text }}
                         </td>
                         <td data-ng-if="!searchbox.hideImage">
-                            <img height="100px" ng-src="{{ tweet.image }}">
+                            <img height="100px" data-ng-src="{{ tweet.image }}">
                         </td>
                      </tr>
                      
                 </table>
+                <div class="twitter-connection-warning alert alert-danger" role="alert" data-ng-hide="connectedTwitter">Please connect to Twitter account before search. Thanks!</div>
                 <div>
                     
                 </div>

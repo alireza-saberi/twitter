@@ -63,8 +63,9 @@ app.constant( 'version', '1.0' );
 
 
 // Controllers
-app.controller('twitterController', ["$scope", "version", "$log", "twitterService" , "$q", function ( $scope, version, $log, twitterService, $q ) {
+app.controller('twitterController', ["$scope", "version", "$log", "twitterService" , "$q", "$window", function ( $scope, version, $log, twitterService, $q, $window ) {
     $scope.version = version;
+    $scope.connectedTwitter = false;
     $scope.hideTable = true;
     $scope.hideMessage = true;
     $scope.searchbox = {
@@ -82,6 +83,7 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
                 $('#connectButton').fadeOut( function() {
                     $('#getTimelineButton, #signOut').fadeIn();
                     $scope.connectedTwitter = true;
+                    $window.location.reload();
                 });
             } else {
 
@@ -96,7 +98,7 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
         $('#getTimelineButton, #signOut').fadeOut( function() {
             $('#connectButton').fadeIn();
             $scope.$apply( function() {
-                $scope.connectedTwitter = false
+                $scope.connectedTwitter = false;
             })
         });
     }
@@ -108,11 +110,9 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
         $scope.connectedTwitter = true;
     }
 
-
     $scope.search = function( searchString ) {
-
-        // handling empty search box
-        if (searchString.length) {
+        // handling empty search box and connection with twitter
+        if ( searchString.length && $scope.connectedTwitter ) {
             twitterService.getSearchResult( searchString ).then( function( data ) {
                 // console.log( data );
                 // console.log( "compeleted in " data.search_metadata.completed_in );
@@ -140,7 +140,7 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
                 }
                 // console.log( trimmed_tweets );
                 $scope.tweets =  trimmed_tweets ;
-                if ( trimmed_tweets.length > 0) {
+                if ( trimmed_tweets.length > 0 ) {
                     $scope.hideTable = false;
                 }
                 else {
@@ -148,7 +148,7 @@ app.controller('twitterController', ["$scope", "version", "$log", "twitterServic
                 }
         })}
         else {
-            console.log("Search box is empty!");
+            console.log("You have to log into yout twitter account and enter something in the searchbox");
         }
     };
 }]);
