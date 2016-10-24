@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: twitterController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: twitterController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Controllers
+app.controller('twitterController', ["$scope", "version", "$log", "twitterService" , "$q", "$window", function ( $scope, version, $log, twitterService, $q, $window ) {
+    $scope.version = version;
+    $scope.connectedTwitter = false;
+    $scope.hideTable = true;
+    $scope.hideMessage = true;
+    $scope.searchbox = {
+        str: "",
+        hideImage: false
+    };
+    $scope.tweets = [];
+    twitterService.initialize();
+
+    //when the user clicks the connect twitter button, the popup authorization window opens
+    /**
+    * Connect to twitter
+    * @author Alireza Saberi
+    * @name connectButton
+    */
+    $scope.connectButton = function() {
+        twitterService.connectTwitter().then( function() {
+            if (twitterService.isReady()) {
+                //if the authorization is successful, hide the connect button and display the tweets
+                angular.element($('#connectButton')).addClass("disappear").removeClass("appear");
+                angular.element($('#signOut')).addClass("appear").removeClass("disappear");
+                $scope.connectedTwitter = true;
+                $window.location.reload();
+                // $('#connectButton').fadeOut( function() {
+                //     $('#getTimelineButton, #signOut').fadeIn();
+                //     $scope.connectedTwitter = true;
+                //     $window.location.reload();
+                // });
+            } else {
+
+            }
+        });
+    };
+
+    //sign out clears the OAuth cache, the user will have to reauthenticate when returning
+    /**
+    * Disconnect from twitter
+    * @author Alireza Saberi
+    * @name Signout buttom
+    */
+    $scope.signOut = function() {
+        twitterService.clearCache();
+        $scope.tweets.length = 0;
+        angular.element($('#connectButton')).addClass("appear").removeClass("disappear");
+        angular.element($('#signOut')).addClass("disappear").removeClass("appear");
+        $scope.connectedTwitter = false;
+        $window.location.reload();
+        // $('#getTimelineButton, #signOut').fadeOut( function() {
+        //     $('#connectButton').fadeIn();
+        //     $scope.$apply( function() {
+        //         $scope.connectedTwitter = false;
+        //         $window.location.reload();
+        //     })
+        // });
+    };
+
+    //if the user is a returning user, hide the sign in button and display the tweets
+    if (twitterService.isReady()) {
+        $('#connectButton').hide();
+        $('#getTimelineButton, #signOut').show();
+        $scope.connectedTwitter = true;
+    }
+    /**
+    * Search in twitter search API over the last week and maximum 100 tweets
+    * @author Alireza Saberi
+    * @name Search
+    */
+    $scope.search = function( searchString ) {
+        // handling empty search box and connection with twitter
+        if ( searchString.length &amp;&amp; $scope.connectedTwitter ) {
+            twitterService.getSearchResult( searchString ).then( function( data ) {
+                // console.log( data );
+                // console.log( "compeleted in " data.search_metadata.completed_in );
+                $scope.timer = data.search_metadata.completed_in;
+                $scope.hideMessage = false;
+                // console.log( 'compeleted in : ' + data.search_metadata.completed_in );
+                // console.log( data.statuses );
+                var trimmed_tweets = new Array();
+                for ( var i = 0; i &lt; data.statuses.length; i++ ) {
+                    if ( data.statuses[i].entities.hasOwnProperty('media') ){
+                        // console.log( data.statuses[i].entities.media[0].media_url );
+                        var tweet = {
+                            text : data.statuses[i].text,
+                            image: data.statuses[i].entities.media[0].media_url
+                        };
+                        trimmed_tweets.push( tweet );
+                    } else {
+                        // console.log("No media image for this tweet!");
+                        var tweet = {
+                            text: data.statuses[i].text,
+                            image: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+                        };
+                         trimmed_tweets.push( tweet );
+                    }
+                }
+                // console.log( trimmed_tweets );
+                $scope.tweets =  trimmed_tweets ;
+                if ( trimmed_tweets.length > 0 ) {
+                    $scope.hideTable = false;
+                }
+                else {
+                    $scope.hideTable = true;
+                }
+        });}
+        else {
+            console.log("You have to log into yout twitter account and enter something in the searchbox");
+        }
+    };
+}]);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#connectButton">connectButton</a></li><li><a href="global.html#Search">Search</a></li><li><a href="global.html#Signoutbuttom">Signout buttom</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Mon Oct 24 2016 14:32:26 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
