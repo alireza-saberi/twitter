@@ -25,3 +25,6 @@ In this small AngularJS app bundled with NodeJS and Express in the backend. We c
 - Type `npm start` to get started with `server.js` on the working directory.
 - Go to your browser and type `localhost:3000` or `http://localhost:3000/`
 
+## License
+
+The contents of this repository are covered under the [MIT License](LICENSE.txt).
